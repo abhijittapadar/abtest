@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_security_group" "MySG2" {
   
 }
-resource "aws_security_group_rule" "ingress" {
+resource "aws_security_group_rule" "demo" {
   security_group_id = aws_security_group.MySG.id
   type              = "ingress"
   from_port         = 80          # Example port (e.g., HTTP)
