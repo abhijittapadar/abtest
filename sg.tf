@@ -2,7 +2,7 @@ provider "aws" {
     region = "us-east-1"
   
 }
-resource "aws_security_group" "MySG" {
+resource "aws_security_group" "MySG2" {
   
 }
 resource "aws_security_group_rule" "ingress" {
