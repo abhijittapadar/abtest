@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8  # Adjust according to your Python version requirements
+    commands:
+      # Install necessary tools for Terraform and AWS CLI
+      - echo "Installing dependencies"
+      - curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+      - sudo apt-get update && sudo apt-get install terraform
+      - pip install --upgrade awscli
+
+  pre_build:
+    commands:
+      - echo "Logging into AWS..."
+      - aws sts get-caller-identity
+      - echo "Initializing Terraform..."
+      - cd terraform  # Assuming your Terraform code is in a folder named 'terraform'
+      - terraform init
+
+  build:
+    commands:
+      - echo "Planning Terraform Deployment..."
+      - terraform plan -out=tfplan
+
+  post_build:
+    commands:
+      - echo "Applying Terraform plan..."
+      - terraform apply -auto-approve tfplan
+      - echo "Security Group Created!"
+
+artifacts:
+  files:
+    - '**/*'  # This can be adjusted if you want to store output files, but generally not necessary in this case.
